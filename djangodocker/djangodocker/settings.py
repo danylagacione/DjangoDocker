@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-x)^y0uxc!ic*vg1zx-g93f2tlmc%4=^-y)yaoh#0b!d)_flv$h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -78,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'djangodatabase',
-        'USER': 'djangodocker',
-        'PASSWORD': 'olist123',
+        'USER': 'root',
+        'PASSWORD': 'olist_ts',
         'HOST': 'ts_mysql',
         'PORT': '3306',
     }

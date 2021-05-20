@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+    ts_app_web_python:
+        build: 
+            dockerfile: Dockerfile
+            context: .
+        ports: 
+            - "8000:8000"
+        command: bash -f ./djangodocker/scripts/run.sh            
+        volumes: 
+            - .:/var/www
+        working_dir: /var/www                
+        container_name: ts_app_web_python
+        networks: 
+            - rede_ts_apps
+        depends_on: 
+            ts_mysql:
+                condition: service_healthy
+    ts_mysql:
+        image: mysql:5.7
+        command: --init-file /data/application/init.sql
+        volumes: 
+            - ./djangodocker/scripts/init.sql:/data/application/init.sql
+        ports: 
+            - "3306:3306"
+        environment: 
+            - MYSQL_ROOT_PASSWORD=olist_ts
+        container_name:  ts_mysql
+        networks: 
+            - rede_ts_apps 
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 3s
+            interval: 5s
+            retries: 3
+networks:
+    rede_ts_apps:
+        driver: bridge
